@@ -1,0 +1,90 @@
+class Campaign:
+    def __init__(self, campaign_id, product, audience, promotion, activity):
+        self.campaign_id = campaign_id
+        self.product = product
+        self.audience = audience
+        self.promotion = promotion
+        self.activity = activity
+
+    def display(self):
+        print(f"Campaign ID: {self.campaign_id}")
+        print(f"Product: {self.product}")
+        print(f"Audience: {self.audience}")
+        print(f"Promotion: {self.promotion}")
+        print(f"Activity: {self.activity}")
+        print('-------------------------')
+
+
+class MarketingSystem:
+    def __init__(self):
+        self.campaigns = []
+
+    def create_campaign(self):
+        campaign_id = input("Enter Campaign ID: ")
+        product = input("Enter Product: ")
+        audience = input("Enter Audience: ")
+        promotion = input("Enter Promotion: ")
+        activity = input("Enter Activity: ")
+
+        # Create a new Campaign object
+        campaign = Campaign(campaign_id, product, audience, promotion, activity)
+        self.campaigns.append(campaign)
+        print("Campaign created successfully!")
+
+    def read_campaigns(self):
+        if not self.campaigns:
+            print("No campaigns available.")
+        else:
+            for campaign in self.campaigns:
+                campaign.display()
+
+    def update_campaign(self):
+        campaign_id = input("Enter Campaign ID to update: ")
+        for campaign in self.campaigns:
+            if campaign.campaign_id == campaign_id:
+                print("Leave blank if no change is required.")
+                campaign.product = input("Enter new Product: ") or campaign.product
+                campaign.audience = input("Enter new Audience: ") or campaign.audience
+                campaign.promotion = input("Enter new Promotion: ") or campaign.promotion
+                campaign.activity = input("Enter new Activity: ") or campaign.activity
+                print("Campaign updated successfully!")
+                return
+        print("Campaign ID not found.")
+
+    def delete_campaign(self):
+        campaign_id = input("Enter Campaign ID to delete: ")
+        for campaign in self.campaigns:
+            if campaign.campaign_id == campaign_id:
+                self.campaigns.remove(campaign)
+                print(f"Campaign {campaign_id} deleted successfully.")
+                return
+        print("Campaign ID not found.")
+
+    def run(self):
+        while True:
+            print("\n--- Sports Marketing System ---")
+            print("1. Create Campaign")
+            print("2. Read Campaigns")
+            print("3. Update Campaign")
+            print("4. Delete Campaign")
+            print("5. Exit")
+            choice = input("Choose an option (1-5): ")
+
+            if choice == '1':
+                self.create_campaign()
+            elif choice == '2':
+                self.read_campaigns()
+            elif choice == '3':
+                self.update_campaign()
+            elif choice == '4':
+                self.delete_campaign()
+            elif choice == '5':
+                print("Exiting the system.")
+                break
+            else:
+                print("Invalid choice. Please try again.")
+
+
+if __name__ == "__main__":
+    system = MarketingSystem()
+    system.run()
